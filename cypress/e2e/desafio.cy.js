@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { faker } from '@faker-js/faker';
+
 const valid_data = require('./..\\fixtures\\desafio_valid_data.json')
 
 
@@ -29,7 +31,7 @@ describe('Cadastro de usuário', () => {
             .should('have.text', 'O campo nome deve ser prenchido')
     })
 
-    it('Validar campo e-mail vazio', () => {
+    it.only('Validar campo e-mail vazio', () => {
         cy.visit('/')
             .get('#top_header')
             .should('contain', 'Promoções especiais disponíveis.')
@@ -43,7 +45,8 @@ describe('Cadastro de usuário', () => {
             .should('have.text', 'Cadastro de usuário')
 
         cy.get('#user')
-            .type(valid_data.name)
+            //.type(valid_data.name)
+            .type(faker.person.fullName())
 
         cy.get('#email')
             .should('not.have.text')
