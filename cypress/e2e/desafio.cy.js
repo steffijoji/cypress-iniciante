@@ -7,19 +7,24 @@ const valid_data = require('./..\\fixtures\\desafio_valid_data.json')
 
 describe('Cadastro de usuário', () => {
 
-    it('Validar campo nome vazio', () => {
+    beforeEach('Acessa a tela de cadastro', () => {
+        // acessa a homepage do site
         cy.visit('/')
-            .get('#top_header')
-            .should('contain', 'Promoções especiais disponíveis.')
+        .get('#top_header')
+        .should('contain', 'Promoções especiais disponíveis.')
 
+        // clica em 'Cadastro'
         cy.get('.fa-lock')
             .should('be.visible')
             .click()
-            
+
+        // confere se está na tela de cadastro
         cy.get('.account_form > h3')
             .should('be.visible')
             .should('have.text', 'Cadastro de usuário')
+    })
 
+    it('Validar campo nome vazio', () => {
         cy.get('#user')
             .should('not.have.text')
 
@@ -31,19 +36,7 @@ describe('Cadastro de usuário', () => {
             .should('have.text', 'O campo nome deve ser prenchido')
     })
 
-    it.only('Validar campo e-mail vazio', () => {
-        cy.visit('/')
-            .get('#top_header')
-            .should('contain', 'Promoções especiais disponíveis.')
-
-        cy.get('.fa-lock')
-            .should('be.visible')
-            .click()
-            
-        cy.get('.account_form > h3')
-            .should('be.visible')
-            .should('have.text', 'Cadastro de usuário')
-
+    it('Validar campo e-mail vazio', () => {       
         cy.get('#user')
             //.type(valid_data.name)
             .type(faker.person.fullName())
@@ -59,19 +52,7 @@ describe('Cadastro de usuário', () => {
             .should('have.text', 'O campo e-mail deve ser prenchido corretamente')
     })
 
-    it('Validar campo e-mail inválido', () => {
-        cy.visit('/')
-            .get('#top_header')
-            .should('contain', 'Promoções especiais disponíveis.')
-
-        cy.get('.fa-lock')
-            .should('be.visible')
-            .click()
-            
-        cy.get('.account_form > h3')
-            .should('be.visible')
-            .should('have.text', 'Cadastro de usuário')
-
+    it('Validar campo e-mail inválido', () => {           
         cy.get('#user')
             .type(valid_data.name)
 
@@ -86,19 +67,7 @@ describe('Cadastro de usuário', () => {
             .should('have.text', 'O campo e-mail deve ser prenchido corretamente')
     })
 
-    it('Validar campo senha vazia', () => {
-        cy.visit('/')
-            .get('#top_header')
-            .should('contain', 'Promoções especiais disponíveis.')
-
-        cy.get('.fa-lock')
-            .should('be.visible')
-            .click()
-            
-        cy.get('.account_form > h3')
-            .should('be.visible')
-            .should('have.text', 'Cadastro de usuário')
-
+    it('Validar campo senha vazia', () => {          
         cy.get('#user')
             .type(valid_data.name)
 
@@ -116,19 +85,7 @@ describe('Cadastro de usuário', () => {
             .should('have.text', 'O campo senha deve ter pelo menos 6 dígitos')
     })
 
-    it('Validar campo senha inválida', () => {
-        cy.visit('/')
-            .get('#top_header')
-            .should('contain', 'Promoções especiais disponíveis.')
-
-        cy.get('.fa-lock')
-            .should('be.visible')
-            .click()
-            
-        cy.get('.account_form > h3')
-            .should('be.visible')
-            .should('have.text', 'Cadastro de usuário')
-
+    it('Validar campo senha inválida', () => {      
         cy.get('#user')
             .type(valid_data.name)
 
@@ -146,19 +103,7 @@ describe('Cadastro de usuário', () => {
             .should('have.text', 'O campo senha deve ter pelo menos 6 dígitos')
     })
 
-    it('Cadastro realizado com sucesso', () => {
-        cy.visit('/')
-            .get('#top_header')
-            .should('contain', 'Promoções especiais disponíveis.')
-
-        cy.get('.fa-lock')
-            .should('be.visible')
-            .click()
-            
-        cy.get('.account_form > h3')
-            .should('be.visible')
-            .should('have.text', 'Cadastro de usuário')
-
+    it('Cadastro realizado com sucesso', () => {  
         cy.get('#user')
             .type(valid_data.name)
 
