@@ -23,3 +23,22 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+/// <reference types="cypress" />
+
+Cypress.Commands.add('accessRegisterPage', () => {
+    // acessa a homepage do site
+    cy.visit('/')
+        .get('#top_header')
+        .should('contain', 'Promoções especiais disponíveis.')
+
+    // clica em 'Cadastro'
+    cy.get('.fa-lock')
+        .should('be.visible')
+        .click()
+
+    // confere se está na tela de cadastro
+    cy.get('.account_form > h3')
+        .should('be.visible')
+        .should('have.text', 'Cadastro de usuário')
+})
