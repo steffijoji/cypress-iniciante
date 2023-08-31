@@ -1,6 +1,8 @@
 /// <reference types="cypress" />
 
 import { faker } from '@faker-js/faker';
+import home_page from '../support/pages/home_page';
+import register_page from '../support/pages/register_page';
 
 
 const valid_data = require('./..\\fixtures\\desafio_valid_data.json')
@@ -9,8 +11,10 @@ const valid_data = require('./..\\fixtures\\desafio_valid_data.json')
 describe('Cadastro de usuário', () => {
 
     beforeEach('Acessar página de cadastro', () => {
+
         // comando para acessar a página de cadastro
-        cy.accessRegisterPage()
+        // usando js em vez do command:
+        home_page.accessRegisterPage()
     })
 
     it('Validar campo nome vazio', () => {
@@ -22,7 +26,7 @@ describe('Cadastro de usuário', () => {
 
     it('Validar campo e-mail vazio', () => {
 
-        //usando faker para gerar nome
+        // usando faker para gerar nome
         cy.fillName(faker.person.fullName)
         cy.get('#email').should('not.have.text')
         cy.saveRegister()
@@ -31,9 +35,9 @@ describe('Cadastro de usuário', () => {
 
     it('Validar campo e-mail inválido', () => {
 
-        //usando constante declarada em fixtures
+        // usando constante declarada em fixtures
         cy.fillName(valid_data.name)
-        //digitando o valor diretamente no parâmetro
+        // digitando o valor diretamente no parâmetro
         cy.fillEmail('email_invalido') 
         cy.saveRegister()
         cy.checkMessage('O campo e-mail deve ser prenchido corretamente')
@@ -57,20 +61,19 @@ describe('Cadastro de usuário', () => {
         cy.checkMessage('O campo senha deve ter pelo menos 6 dígitos')
     })
 
-    it.only('Validar cadastro realizado com sucesso', () => {
+    it('Validar cadastro realizado com sucesso', () => {
 
-        cy.fillName(valid_data.name)
+/*         cy.fillName(valid_data.name)
         cy.fillEmail(valid_data.email)
         cy.fillPassword(valid_data.password)
         cy.saveRegister()
-        cy.checkRegisterSuccess(valid_data.name)
+        cy.checkRegisterSuccess(valid_data.name) */
 
-/*      cy.get('#swal2-title')
-            .should('be.visible')
-            .should('have.text', 'Cadastro realizado!')
-        
-        cy.get('#swal2-html-container')
-        .should('be.visible')
-        .should('contain', `Bem-vindo ${valid_data.name}`) */
+        // usando js em vez do command:
+        register_page.fillName(valid_data.name)
+        register_page.fillEmail(valid_data.email)
+        register_page.fillPassword(valid_data.password)
+        register_page.saveRegister()
+        register_page.checkRegisterSuccess(valid_data.name)      
     })
 })
