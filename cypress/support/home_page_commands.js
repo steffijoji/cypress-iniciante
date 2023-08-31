@@ -26,19 +26,32 @@
 
 /// <reference types="cypress" />
 
+// Elementos
+const elements = {
+    buttons: {
+        registerPage: '.fa-lock'
+    },
+    messages: {
+        homePageTitle: '#top_header',
+        registerPageTitle: '.account_form > h3'
+    }
+}
+
+
+// Ações/Métodos/Funções
 Cypress.Commands.add('accessRegisterPage', () => {
     // acessa a homepage do site
     cy.visit('/')
-        .get('#top_header')
+        .get(elements.messages.homePageTitle)
         .should('contain', 'Promoções especiais disponíveis.')
 
     // clica em 'Cadastro'
-    cy.get('.fa-lock')
+    cy.get(elements.buttons.registerPage)
         .should('be.visible')
         .click()
 
     // confere se está na tela de cadastro
-    cy.get('.account_form > h3')
+    cy.get(elements.messages.registerPageTitle)
         .should('be.visible')
         .should('have.text', 'Cadastro de usuário')
 })
